@@ -1,0 +1,61 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+*.pot
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+.history/
+
+# --- Flutter / Dart ---
+# Build outputs
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock
+.dart_tool/
+
+# iOS / Xcode
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Pods/
+ios/.symlinks/
+ios/build/
+ios/DerivedData/
+
+# Android / Gradle
+.android/
+gradle/
+**/gradle-wrapper.jar
+**/local.properties
+**/.gradle/
+**/captures/
+**/outputs/
+
+# Secrets / Databases
+.env
+*.db
+
+# Misc
+.DS_Store
+*.swp
+*.swo
+
