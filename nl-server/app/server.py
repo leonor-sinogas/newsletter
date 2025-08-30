@@ -25,8 +25,40 @@ class ClientThread(threading.Thread):
         self.wfile.write(line + "\n")
         self.wfile.flush()
 
-    def run 
+    def run(self):
+        self.log("connected")
+        try:
+            for raw in self.rfile:
+                line = raw.rstrip("\n")
+                if not line:
+                    continue
+                try:
+                    cmd, args = parse_line(line)
+                except ValueError as e:
+                    self.send(encode_err(str(e)))
+                    continur
 
+                try:
+                    result = handle_command(cmd, args, self.store, self.addr)
+                    self.send(encode_ok(result))
+                except Exception e:
+                    self.send(encode_err(str(e)))
+        except Exception as e:
+            self.log(f"error: {e}")
+        finally:
+            try:
+                self.wfile.close()
+            except Exception:
+                pass
+            try:
+                self.rfile.close()
+            except Exception:
+                pass
+            try:
+                self.conn.close()
+            except Exception:
+                pass
+            self.log("disconnected")
 
 class Server:
     def __init__(self, host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
