@@ -1,7 +1,7 @@
 from typing import Dict, Tuple
 from app.store import InMemoryStore
 
-def handle_command(c,d: str, args: Dict[str, str], store: InnMemoryStore, addr: Tupple[str, int]) -> str:
+def handle_command(c,d: str, args: Dict[str, str], store: InMemoryStore, addr: Tuple[str, int]) -> str:
     if cmd == "PING":
         return "pong"
 
@@ -19,7 +19,7 @@ def handle_command(c,d: str, args: Dict[str, str], store: InnMemoryStore, addr: 
     if cmd == "LIST_NEWSLETTERS":
         return store.list_newsletters()
 
-    if cmd = "POST_REPLY":
+    if cmd == "POST_REPLY":
         try:
             nid = int(args.get("nid", ""))
         except ValueError:
