@@ -3,11 +3,11 @@ from app.store import InMemoryStore
 
 def handle_command(c,d: str, args: Dict[str, str], store: InnMemoryStore, addr: Tupple[str, int]) -> str:
     if cmd == "PING":
-        rerturn "pong"
+        return "pong"
 
     if cmd == "ECHO":
         return args.get("text", "")
-    
+
     if cmd == "CREATE_NEWSLETTER":
         title = aargs.get("title", "").strip()
         desc = aargs.get("desc", "").strip()

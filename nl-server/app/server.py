@@ -10,18 +10,18 @@ DEFAULT_HOST = os.environ.get("SERVER_HOST", "0.0.0.0")
 DEFAULT_PORT = int(os.environ.get("SERVER_PORT", "5050"))
 
 class ClientThread(threading.Thread):
-    def __init__(self, onn: socket.socket, addr:Tuple[str, int], store: InMemoryStore):
+    def __init__(self, conn: socket.socket, addr:Tuple[str, int], store: InMemoryStore):
         super().__init__(daemon=True)
         self.conn = conn
         self.addr = addr
         self.store = store
-        self.rfile= self.conn.makefile("r", enconding="utf-8", newline="\n")
-        self.wfile= self.conn.makefile("w", enconding="utf-8", newline="\n")
+        self.rfile= self.conn.makefile("r", encoding="utf-8", newline="\n")
+        self.wfile= self.conn.makefile("w", encoding="utf-8", newline="\n")
 
     def log(self, msg: str):
         print(f"[{self.addr[0]}: {self.addr[1]}] {msg}")
 
-    def send(self, msg: str):
+    def send(self, line: str):
         self.wfile.write(line + "\n")
         self.wfile.flush()
 
@@ -36,12 +36,12 @@ class ClientThread(threading.Thread):
                     cmd, args = parse_line(line)
                 except ValueError as e:
                     self.send(encode_err(str(e)))
-                    continur
+                    continue
 
                 try:
                     result = handle_command(cmd, args, self.store, self.addr)
                     self.send(encode_ok(result))
-                except Exception e:
+                except Exception as e:
                     self.send(encode_err(str(e)))
         except Exception as e:
             self.log(f"error: {e}")
@@ -64,7 +64,7 @@ class Server:
     def __init__(self, host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
         self.host = host
         self.port = port
-        self.store = InMemoreStore()
+        self.store = InMemoryStore()
 
     def run(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

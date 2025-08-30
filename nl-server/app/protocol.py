@@ -58,7 +58,7 @@ def tokenize(s: str):
                 continue
             cur.append(c)
             i += 1
-    if cur: 
+    if cur:
         out.append("".join(cur))
     return out
 
